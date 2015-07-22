@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "next_id":101,
+        "next_id": 101,
         "name": "competitions",
         "genre": [
             {
@@ -15,7 +15,7 @@
                             20
                         ],
                         "name": "Indigo Saga",
-                        "oneline": "Thematic Dance",
+                        "oneline": "Thematic Dance Dance",
                         "intro": "<b>Thematic Dance Competition </b> <br> <br>‘Every day brings a chance for you to draw in a breath, kick off your shoes, and dance.’ <br>― Oprah Winfrey<br><br>Letting go of your inhibitions can often be difficult--just ask a sober person at a karaoke bar--but doing so is a requisite for getting the most out of Mood Indigo.<br>As Bruce Lee said “Don’t think….feel!” <br>Put your hand on your heart and listen to your soul. Intensify the floor by doing contemporary dance and show your thoughts via expressions and catch the audience’s eye.<br><br><b>Teams that have not been selected or couldn't participate in the online eliminations can participate in the on ground eliminations to be conducted at IIT Bombay during the fest.</b>",
                         "genre": "Dance",
                         "genrebaap": "competitions",
@@ -903,7 +903,7 @@
     {
         "id": 2,
         "name": "informals",
-        "next_id":201,
+        "next_id": 201,
         "genre": [
             {
                 "name": "Hysteria",
@@ -1264,7 +1264,7 @@
     {
         "id": 3,
         "name": "concerts",
-        "next_id":301,
+        "next_id": 301,
         "genre": [
             {
                 "name": "Contemporary Nite",
@@ -1419,7 +1419,7 @@
     {
         "id": 4,
         "name": "arts",
-        "next_id":401,
+        "next_id": 401,
         "genre": [
             {
                 "name": "Food Fest",
@@ -1600,7 +1600,7 @@
     {
         "id": 5,
         "name": "proshows",
-        "next_id":501,
+        "next_id": 501,
         "genre": [
             {
                 "name": "IMF",

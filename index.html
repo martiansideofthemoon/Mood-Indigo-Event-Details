@@ -160,7 +160,7 @@ app.controller('validateCtrl', function($scope,$http) {
 
     		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'][event_position]=$scope.event_selected;
 
-    		var send_data="data="+encodeURIComponent(JSON.stringify($scope.records));
+    		var send_data="data="+encodeURIComponent(JSON.stringify($scope.records,null,4));
     		$http({ 
 	        method : 'POST', 
 	        url : 'http://localhost:8888/updateDetails', 
