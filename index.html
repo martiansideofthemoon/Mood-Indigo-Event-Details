@@ -20,20 +20,23 @@ name="myForm" ng-hide="isValid" novalidate>
 </form>
 <form ng-show="isValid">
 <p>
-<select ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loaddetails(LOAD_GENRES)">	
+<select ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loadDetails(LOAD_GENRES)">	
 </select>
 </p>
 <p>
-<select ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loaddetails(LOAD_EVENTS)">
+<select ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loadDetails(LOAD_EVENTS)">
 </select>
 </p>
 <p>
-<select ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loaddetails(LOAD_EVENT_DATA)">
+<select ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loadDetails(LOAD_EVENT_DATA)">
 </select>
 </p>
 <p>
 <button ng-click="addEvent()">Add an Event</button> <input type="text" ng-model="add_event_text"> 
 </p>
+<div ng-repeat="p in event_parameters">
+	{{p.help_text}}<input type="text" ng-model="p.name" value=""><br><br>
+</div>
 <p> Name of Event: 
 <input type="text" ng-model="name">
 </p>
@@ -71,6 +74,17 @@ name="myForm" ng-hide="isValid" novalidate>
 <script>
 var app = angular.module('myApp', []);
 app.controller('validateCtrl', function($scope,$http) {
+	$scope.event_parameters=[{"name":"","help_text":"Name of the Event: ","ref":"name"},
+							 {"name":"","help_text":"Oneline Name: ","ref":"oneline"},
+							 {"name":"","help_text":"Introduction: ","ref":"intro"},
+							 {"name":"","help_text":"Genre :","ref":"genre"},
+							 {"name":"","help_text":"Genrebaap :","ref":"genrebaap"},
+							 {"name":"","help_text":"Rules :","ref":"rules"},
+							 {"name":"","help_text":"Event ID: ","ref":"event_id"},
+							 {"name":"","help_text":"Prizes :","ref":"prizes"},
+							 {"name":"","help_text":"Registration :","ref":"registration"},
+							 {"name":"","help_text":"Multicity: ","ref":"multicity"}
+							 ];
 	$scope.LOAD_GENRES=1;
 	$scope.fields_not_filled=false;
 	$scope.LOAD_EVENTS=2;
@@ -114,7 +128,7 @@ app.controller('validateCtrl', function($scope,$http) {
     	//REPLACE WITH API CALL
     	
     };
-    $scope.loaddetails = function(id)
+    $scope.loadDetails = function(id)
     {
     	$scope.clearDetails(id);
     	switch (id)
@@ -137,17 +151,8 @@ app.controller('validateCtrl', function($scope,$http) {
     			}
     			console.log($scope.event_selected);
     			//$scope.event_selected=$scope.event_options[$scope.events-1];
-    			$scope.name=$scope.event_selected['name'];
-    			$scope.oneline=$scope.event_selected['oneline'];
-    			$scope.intro=$scope.event_selected['intro'];
-    			$scope.genre=$scope.event_selected['genre'];
-    			$scope.genrebaap=$scope.event_selected['genrebaap'];
-    			$scope.rules=$scope.event_selected['rules'];
-    			$scope.event_id=$scope.event_selected['event_id'];
-    			$scope.prizes=$scope.event_selected['prizes'];
-    			$scope.registration=$scope.event_selected['registration'];
-    			//if (!$scope.event_selected['multicity']==undefined)
-    			$scope.multicity=$scope.event_selected['multicity'];
+    			for (var i=0;i<$scope.event_parameters.length;i++)
+    				$scope.event_parameters[i]['name']=$scope.event_selected[$scope.event_parameters[i]['ref']];
     			break;
     	}	
     };
@@ -158,17 +163,8 @@ app.controller('validateCtrl', function($scope,$http) {
 	    	case $scope.LOAD_GENRES:
 	    		$scope.event_options=[];
 			case $scope.LOAD_EVENTS:
-				$scope.name="";
-				$scope.oneline="";
-				$scope.intro="";
-				$scope.genre="";
-				$scope.genrebaap="";
-				$scope.rules="";
-				$scope.event_id="";
-				$scope.prizes="";
-				$scope.registration="";
-				$scope.multicity="";
-				$scope.add_event_text="";
+				for (var i=0;i<$scope.event_parameters.length;i++)
+					$scope.event_parameters[i]['name']="";
 				break;
 		}
     }
@@ -191,6 +187,9 @@ app.controller('validateCtrl', function($scope,$http) {
     					break;
     				}
     			}
+    		for (var i=0;i<$scope.event_parameters.length;i++)
+    			$scope.event_selected[$scope.event_parameters[i]['ref']]=$scope.event_parameters[i]['name'];
+    		/*
     		$scope.event_selected['name']=$scope.name;
 			$scope.event_selected['oneline']=$scope.oneline;
 			$scope.event_selected['intro']=$scope.intro;
@@ -202,6 +201,7 @@ app.controller('validateCtrl', function($scope,$http) {
 			$scope.event_selected['registration']=$scope.registration;
 			//if (!$scope.event_selected['multicity']==undefined)
 			$scope.event_selected['multicity']=$scope.multicity;
+			*/
 			console.log($scope.event_selected);
     		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'][$scope.event_position]=$scope.event_selected;
     		console.log($scope.records);
@@ -221,6 +221,7 @@ app.controller('validateCtrl', function($scope,$http) {
     }
     $scope.addEvent = function()
     {
+    	$scope.event_parameters["yolo"].name="arbit";
     	console.log($scope.add_event_text);
     	if ($scope.add_event_text===undefined || $scope.add_event_text==="")
     		$scope.add_event_text="Empty!!";
@@ -243,7 +244,7 @@ app.controller('validateCtrl', function($scope,$http) {
                     };
     		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'].push(new_event);
     		console.log($scope.add_event_text);
-    		$scope.loaddetails($scope.LOAD_EVENTS);
+    		$scope.loadDetails($scope.LOAD_EVENTS);
     		$scope.clearDetails($scope.LOAD_EVENTS);
 
     	}
