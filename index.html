@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html ng-app="myApp" >
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>  
+<body ng-controller="validateCtrl">
+<form  
+name="myForm" ng-hide="isValid" novalidate>
+
+<p>Username:<br>
+<input type="text" name="user" ng-model="user.username" required>
+
+</p>
+
+<p>Password:<br>
+<input data-ng-model='user.password' type="password" name='password' placeholder='password' required>
+      <div ng-show="form.password.$error.required">
+        Field required</div>
+</p>
+<button ng-click="validate()">Click me!</button>
+<p ng-show="loginError">Invalid Username / Password.</p>
+</form>
+<form ng-show="isValid">
+<p>
+<select ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loaddetails(LOAD_GENRES)">	
+</select>
+</p>
+<p>
+<select ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loaddetails(LOAD_EVENTS)">
+</select>
+</p>
+<p>
+<select ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loaddetails(LOAD_EVENT_DATA)">
+</select>
+</p>
+<p>
+<button ng-click="addEvent()">Add an Event</button> <input type="text" ng-model="add_event_text"> 
+</p>
+<p> Name of Event: 
+<input type="text" ng-model="name">
+</p>
+<p> Oneline Name: 
+<input type="text" ng-model="oneline">
+</p>
+<p> Introduction: 
+<input type="text" ng-model="intro">
+</p>
+<p> Genre: 
+<input type="text" ng-model="genre">
+</p>
+<p> Genrebaap: 
+<input type="text" ng-model="genrebaap">
+</p>
+<p> Rules: 
+<input type="text" ng-model="rules">
+</p>
+<p> Event ID: 
+<input type="text" ng-model="event_id" readonly>
+</p>
+<p> Prizes: 
+<input type="text" ng-model="prizes">
+</p>
+<p> Registration: 
+<input type="text" ng-model="registration">
+</p>
+<p> Multicity: 
+<input type="text" ng-model="multicity">
+</p>
+<button ng-click="update()">Update</button>
+<p ng-show="fields_not_filled">Fill all fields</p>
+</form>
+
+<script>
+var app = angular.module('myApp', []);
+app.controller('validateCtrl', function($scope,$http) {
+	$scope.LOAD_GENRES=1;
+	$scope.fields_not_filled=false;
+	$scope.LOAD_EVENTS=2;
+	$scope.LOAD_EVENT_DATA=3;
+	$scope.valid_users = [
+	{
+	"username": "kalpesh",
+	"password": "kalpesh"
+	}
+	]
+	$scope.isValid=false;
+	$http.get("http://localhost:8888/api/data")
+    .success(function(data,status) {
+    		$scope.records = data;	
+    });
+
+    $scope.validate = function()
+    {
+    	var send_data="username="+$scope.user.username+"&password="+$scope.user.password;
+    	$http({ 
+        method : 'POST', 
+        url : 'http://localhost:8888/checkLogin', 
+        data : send_data, 
+        responseType : "json",
+        headers: {
+            "Content-Type": 'application/x-www-form-urlencoded'
+        }
+      }).success(function(data, status, headers, config){
+       		console.log(data);
+       		if (data)
+       		{
+       			$scope.isValid=true;
+       			$scope.loginError=false;	
+       		}
+       		else
+       		{
+       			$scope.loginError=true;
+       		}
+       		
+      });
+    	//REPLACE WITH API CALL
+    	
+    };
+    $scope.loaddetails = function(id)
+    {
+    	$scope.clearDetails(id);
+    	switch (id)
+    	{
+    		case $scope.LOAD_GENRES:
+    			$scope.genre_options=$scope.records[$scope.types-1]['genre'];
+    			$scope.event_options=[];
+    			break;
+    		case $scope.LOAD_EVENTS:
+    			$scope.event_options=$scope.genre_options[$scope.genres-1]['details'];
+    			break;
+    		case $scope.LOAD_EVENT_DATA:
+    			for (var i=0;i<$scope.event_options.length;i++)
+    			{
+    				if ($scope.event_options[i]['event_id']==$scope.events)
+    				{
+    					$scope.event_selected=$scope.event_options[i];
+    					break;
+    				}
+    			}
+    			console.log($scope.event_selected);
+    			//$scope.event_selected=$scope.event_options[$scope.events-1];
+    			$scope.name=$scope.event_selected['name'];
+    			$scope.oneline=$scope.event_selected['oneline'];
+    			$scope.intro=$scope.event_selected['intro'];
+    			$scope.genre=$scope.event_selected['genre'];
+    			$scope.genrebaap=$scope.event_selected['genrebaap'];
+    			$scope.rules=$scope.event_selected['rules'];
+    			$scope.event_id=$scope.event_selected['event_id'];
+    			$scope.prizes=$scope.event_selected['prizes'];
+    			$scope.registration=$scope.event_selected['registration'];
+    			//if (!$scope.event_selected['multicity']==undefined)
+    			$scope.multicity=$scope.event_selected['multicity'];
+    			break;
+    	}	
+    };
+    $scope.clearDetails = function(id)
+    {
+    	switch(id)
+    	{
+	    	case $scope.LOAD_GENRES:
+	    		$scope.event_options=[];
+			case $scope.LOAD_EVENTS:
+				$scope.name="";
+				$scope.oneline="";
+				$scope.intro="";
+				$scope.genre="";
+				$scope.genrebaap="";
+				$scope.rules="";
+				$scope.event_id="";
+				$scope.prizes="";
+				$scope.registration="";
+				$scope.multicity="";
+				$scope.add_event_text="";
+				break;
+		}
+    }
+    $scope.update = function()
+    {
+    	console.log($scope.types);
+    	console.log($scope.events);
+    	console.log($scope.genres);
+    	if ($scope.types===undefined || $scope.events===undefined || $scope.genres===undefined)
+    		$scope.fields_not_filled=true;
+    	else
+    	{
+    		$scope.fields_not_filled=false;
+    		$scope.event_position=0;
+    		for (var i=0;i<$scope.event_options.length;i++)
+    			{
+    				if ($scope.event_options[i]['event_id']==$scope.events)
+    				{
+    					$scope.event_position=i;
+    					break;
+    				}
+    			}
+    		$scope.event_selected['name']=$scope.name;
+			$scope.event_selected['oneline']=$scope.oneline;
+			$scope.event_selected['intro']=$scope.intro;
+			$scope.event_selected['genre']=$scope.genre;
+			$scope.event_selected['genrebaap']=$scope.genrebaap;
+			$scope.event_selected['rules']=$scope.rules;
+			$scope.event_selected['event_id']=$scope.event_id;
+			$scope.event_selected['prizes']=$scope.prizes;
+			$scope.event_selected['registration']=$scope.registration;
+			//if (!$scope.event_selected['multicity']==undefined)
+			$scope.event_selected['multicity']=$scope.multicity;
+			console.log($scope.event_selected);
+    		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'][$scope.event_position]=$scope.event_selected;
+    		console.log($scope.records);
+    		var send_data="data="+encodeURIComponent(JSON.stringify($scope.records));
+    		$http({ 
+	        method : 'POST', 
+	        url : 'http://localhost:8888/updateDetails', 
+	        data : send_data, 
+	        responseType : "json",
+	        headers: {
+	            "Content-Type": 'application/x-www-form-urlencoded'
+	        }
+	      }).success(function(data, status, headers, config){
+	       		console.log(data);
+	      });
+    	}
+    }
+    $scope.addEvent = function()
+    {
+    	console.log($scope.add_event_text);
+    	if ($scope.add_event_text===undefined || $scope.add_event_text==="")
+    		$scope.add_event_text="Empty!!";
+    	else
+    	{
+    		var new_event={
+                        "id": [
+                            20
+                        ],
+                        "name": $scope.add_event_text,
+                        "oneline": "",
+                        "intro": "",
+                        "genre": "",
+                        "genrebaap": "",
+                        "rules": "",
+                        "event_id": 55555,
+                        "prizes": "",
+                        "registration": "",
+                        "multicity": ""
+                    };
+    		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'].push(new_event);
+    		console.log($scope.add_event_text);
+    		$scope.loaddetails($scope.LOAD_EVENTS);
+    		$scope.clearDetails($scope.LOAD_EVENTS);
+
+    	}
+    };
+
+});
+</script>
+
+</body>
+</html>
