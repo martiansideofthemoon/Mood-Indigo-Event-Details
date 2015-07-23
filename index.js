@@ -56,9 +56,10 @@ app.post('/checkLogin',urlEncodedParser,supportCrossOriginScript,function(req,re
 app.post('/updateDetails',urlEncodedParser,supportCrossOriginScript,function(req,res){
 	
 	fs.writeFile(file, req['body']['data'], function (err) {
-
+		if(err){res.send(false);}
+		else{res.send(true);}
 	});
-	res.send(true);
+	
 	});
 
 http.createServer(app).listen(8888);

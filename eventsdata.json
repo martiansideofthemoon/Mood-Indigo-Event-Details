@@ -136,7 +136,7 @@
             {
                 "name": "Contemporary Nite",
                 "shortname": "contem",
-                "day": 1,
+                "id": 1,
                 "details": [
                     {
                         "id": [
@@ -168,7 +168,7 @@
             {
                 "name": "EDM Nite",
                 "shortname": "edm",
-                "day": 2,
+                "id": 2,
                 "details": [
                     {
                         "id": [
@@ -212,7 +212,7 @@
             {
                 "name": "Livewire Nite",
                 "shortname": "livewire",
-                "day": 3,
+                "id": 3,
                 "details": [
                     {
                         "id": [
@@ -242,7 +242,7 @@
             {
                 "name": "Popular Nite",
                 "shortname": "popular",
-                "day": 4,
+                "id": 4,
                 "details": [
                     {
                         "id": [
@@ -336,7 +336,7 @@
             {
                 "name": "Humor Fest",
                 "shortname": "humorfest",
-                "id": 4,
+                "id": 2,
                 "intro": "With stand up comedians , one act plays and interactive workshops, get ready to laugh your heart out. Enjoy the stress busting environment and engage in top class comedy acts. These comedians will tickle your funny bone with their one-liners,puns and sarcasm. We know the importance of humor in your lives and we'll make sure you enjoy these moments to the fullest.<br>It is said that smile is a curve that sets everything straight.Knowing well the importance of Humour in our lives this year Mood Indigo will bring a hilarious bouquet of performances ranging from variety humour acts, clowns, mimes and stand up artists.So if you are ready to be amused and 'ROFL' we have a lot it store for you.<br>Chris Turner, Schorsch Bross and Improv Comedy Mumbai are a few artists who have giggled up the crowd in subsequent editions.",
                 "details": [
                 ]
@@ -344,7 +344,7 @@
             {
                 "name": "Fringe Fest",
                 "shortname": "fringe",
-                "id": 5,
+                "id": 3,
                 "intro": "Streets are indeed one of the most happening places during the four days of Mood Indigo.<br>Performance and activities which are a sheer display of energy, enthusiasm and talent.A series of thrilling high octane acts With the most unconventional and enthralling artists, fringe fest is the one the most exciting events. Street artists and performers from across the globe visit Mood Indigo to display their unique skill sets which includes daring stunts , never seen before skills and a lot of interaction. It has always been a successful show of great talent and mettle. It's indeed once in a lifetime opportunity to witness such greats perform for you !<br>Contortionists, Stunt-Comedians, Unicycle, Juggling and what not we have performers which will set your hearts beating with their performances and leave you with a memorable experience.Acts which you have never seen before which make you a fan of their talent.",
                 "details": [
                 ]
@@ -352,7 +352,7 @@
             {
                 "name": "After Nites",
                 "shortname": "afternites",
-                "id": 6,
+                "id": 4,
                 "intro": "Entertainment, Entertainment, Entertainment !<br>We have indeed saved the best for the last.End your each day at Mood Indigo with acts and ideas that leave an everlasting impact. Events which you would have never seen before.Be prepared to be on the edge of your seats because this one will most definitely blow away your mind.<br><br>The most prestigious and spectacular of all events, it brings you world's most amazing and unique performances. It is one of the eye-catchy events of Mood Indigo and is a showcase of the most finest and polished arts, you would ever see. The organizers put in a lot of effort to get the best of talents from around the globe and leave no stones unturned. You don't want to miss this one boy !",
                 "details": [
                 ]

@@ -27,6 +27,7 @@ name="myForm" ng-hide="isValid" novalidate>
 <select ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loadDetails(LOAD_EVENTS)">
 </select>
 </p>
+<p ng-bind-html="currentgenre"></p>
 <p>
 <select ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loadDetails(LOAD_EVENT_DATA)">
 </select>
@@ -111,6 +112,7 @@ app.controller('validateCtrl', function($scope,$http) {
     			break;
     		case $scope.LOAD_EVENTS:
     			$scope.event_options=$scope.genre_options[$scope.genres-1]['details'];
+                $scope.currentgenre=$scope.genre_options[$scope.genres-1]['intro'];
     			break;
     		case $scope.LOAD_EVENT_DATA:
     			for (var i=0;i<$scope.event_options.length;i++)
@@ -170,7 +172,14 @@ app.controller('validateCtrl', function($scope,$http) {
 	            "Content-Type": 'application/x-www-form-urlencoded'
 	        }
 	      }).success(function(data, status, headers, config){
-	       		console.log(data);
+	       		if(data)
+                {
+                    alert("successfully updated");
+                }
+                else
+                {
+                    alert("some error, Refresh and try again");
+                }
 	      });
     	}
     }
