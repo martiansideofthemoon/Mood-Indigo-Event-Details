@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "next_id": 102,
+        "next_id": 103,
         "name": "competitions",
         "genre": [
             {
@@ -293,16 +293,14 @@
                 "shortname": "foodfest",
                 "id": 1,
                 "intro": "The way to a man’s heart is indeed through his stomach and we take it damn seriously.Combine the innovative bent of Mood Indigo with impeccable culinary choices we bring to you an amalgamation of ideas and skills.Unleash the foodie in you learn how fun and food go hand in hand.<br><br>Always wanted to become a chef ? Like eating good cuisine?  At least you like eating when you are tired , right ? The heavenly place to be in a fest after a tiring walk - Food Fest. Get to taste world famous cuisines prepared by renowned chefs. What use are the chefs if they don't tell how they made it ? You guessed it right ! We conduct teaching lessons of the most delectable and mouth-watering cuisines you always wanted to cook. It becomes fun when you learn, make and also present it in front of the fervent youth of India.",
-                "details": [
-                ]
+                "details": []
             },
             {
                 "name": "Workshops",
                 "shortname": "workshops",
                 "id": 2,
                 "intro": "The place which has it all ! From gifted experts to enthusiastic learners, you enjoy as well as learn basics of art, dramatics, music and what not. The best part of the workshops are that they are absolutely free and can be as productive as paid classes. These workshops are meant to teach things which you would have always wanted to learn and would provide great experience as well as fun.",
-                "details": [
-                ]
+                "details": []
             },
             {
                 "name": "Interactive Arts",
@@ -330,32 +328,28 @@
                 "shortname": "music",
                 "id": 1,
                 "intro": "<b>International Music Festival (IMF)</b><br>‘Music is what feelings sound like,<br>Presenting a dynamic mix of world class performers, IMF showcases a rich range of quality events. We bring artists and performers from all around the world, who represent diverse cultures and unite all of us with exquisite musical performances. Audiences are stretched and stimulated, given the amazing performances displayed by the bands and artists.<br>This December come witness the most amazing sounds from throughout the world which will please the musical souls. Reggae, Jazz, Blues, Indie we have something for everyone. Come visit the amazing International Music Festival to experience world class performers coming around the world to conspire into the celebration of this musical extravaganza. The most diverse and the most entertaining musicians all under one roof, this is an event that you can simply can’t miss.<br>Past performers include Ana Gog and The Outside Track from Ireland, FlagasK from France, Robin Sucroso from Germany and AramBola.",
-                "details": [
-                ]
+                "details": []
             },
             {
                 "name": "Humor Fest",
                 "shortname": "humorfest",
                 "id": 4,
                 "intro": "With stand up comedians , one act plays and interactive workshops, get ready to laugh your heart out. Enjoy the stress busting environment and engage in top class comedy acts. These comedians will tickle your funny bone with their one-liners,puns and sarcasm. We know the importance of humor in your lives and we'll make sure you enjoy these moments to the fullest.<br>It is said that smile is a curve that sets everything straight.Knowing well the importance of Humour in our lives this year Mood Indigo will bring a hilarious bouquet of performances ranging from variety humour acts, clowns, mimes and stand up artists.So if you are ready to be amused and 'ROFL' we have a lot it store for you.<br>Chris Turner, Schorsch Bross and Improv Comedy Mumbai are a few artists who have giggled up the crowd in subsequent editions.",
-                "details": [
-                ]
+                "details": []
             },
             {
                 "name": "Fringe Fest",
                 "shortname": "fringe",
                 "id": 5,
                 "intro": "Streets are indeed one of the most happening places during the four days of Mood Indigo.<br>Performance and activities which are a sheer display of energy, enthusiasm and talent.A series of thrilling high octane acts With the most unconventional and enthralling artists, fringe fest is the one the most exciting events. Street artists and performers from across the globe visit Mood Indigo to display their unique skill sets which includes daring stunts , never seen before skills and a lot of interaction. It has always been a successful show of great talent and mettle. It's indeed once in a lifetime opportunity to witness such greats perform for you !<br>Contortionists, Stunt-Comedians, Unicycle, Juggling and what not we have performers which will set your hearts beating with their performances and leave you with a memorable experience.Acts which you have never seen before which make you a fan of their talent.",
-                "details": [
-                ]
+                "details": []
             },
             {
                 "name": "After Nites",
                 "shortname": "afternites",
                 "id": 6,
                 "intro": "Entertainment, Entertainment, Entertainment !<br>We have indeed saved the best for the last.End your each day at Mood Indigo with acts and ideas that leave an everlasting impact. Events which you would have never seen before.Be prepared to be on the edge of your seats because this one will most definitely blow away your mind.<br><br>The most prestigious and spectacular of all events, it brings you world's most amazing and unique performances. It is one of the eye-catchy events of Mood Indigo and is a showcase of the most finest and polished arts, you would ever see. The organizers put in a lot of effort to get the best of talents from around the globe and leave no stones unturned. You don't want to miss this one boy !",
-                "details": [
-                ]
+                "details": []
             }
         ]
     }
