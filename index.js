@@ -6,6 +6,7 @@ var jsonfile = require('jsonfile')
 var util = require('util')
 var urlEncodedParser = bodyParser.urlencoded({extended:false, limit:'50mb'} );
 var file="eventsdata.json";
+var fs = require('fs');
 var valid_users = [
 	{
 	"username": "kalpesh",
@@ -37,8 +38,11 @@ app.post('/checkLogin',urlEncodedParser,supportCrossOriginScript,function(req,re
 app.post('/updateDetails',urlEncodedParser,supportCrossOriginScript,function(req,res){
 	console.log(req['body']['data']);
 	
-	jsonfile.writeFile(file, JSON.parse(req['body']['data']), function (err) {
+	/*jsonfile.writeFile(file, JSON.stringify(JSON.parse(req.body.data),0,4), function (err) {
   		console.error(err);
+	});*/
+	fs.writeFile(file, req['body']['data'], function (err) {
+
 	});
 	res.send(true);
 	});
