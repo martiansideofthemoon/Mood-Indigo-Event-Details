@@ -69,7 +69,7 @@ name="myForm" ng-hide="isValid" novalidate>
 </form>
 
 <script>
-var app = angular.module('myApp', []);
+var app = angular.module('myApp',[]);
 app.controller('validateCtrl', function($scope,$http) {
 	$scope.LOAD_GENRES=1;
 	$scope.fields_not_filled=false;

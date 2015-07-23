@@ -19,9 +19,7 @@ function supportCrossOriginScript(req, res, next) {
     next();
 }
 
-app.get('/',function(req,res){
-	res.send("hello");
-});
+app.use('/',express.static(__dirname));
 
 app.get('/api/data',supportCrossOriginScript,function(req,res){
 	console.log("yolo");
