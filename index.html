@@ -41,8 +41,10 @@ name="myForm" ng-hide="isValid" novalidate>
 <button ng-click="addEvent()">Add an Event</button> <input type="text" ng-model="add_event_text"> 
 </p>
 <div ng-repeat="p in event_parameters">
-	{{p.help_text}}<input type="text" ng-focus="" ng-model="p.name" value=""><br><br>
-    <div ng-show="p.textangular" style="width:80%; border-style:groove; border-width:5px; border-color:blue" text-angular ng-model="p.name"></div>
+	{{p.help_text}}<input type="text" ng-hide="p.textangular" ng-model="p.name" value="">
+    <button ng-show="p.textangular" ng-click="p.active=!p.active">{{!p.active? "Edit" : "Save"}}</button>
+    <br><br>
+    <div ng-show="p.active" style="width:70%; border-style:groove; border-width:5px; border-color:blue" text-angular ng-model="p.name"></div>
 </div>
 <button ng-click="update()">Update</button>
 <p ng-show="fields_not_filled">Fill all fields</p>
@@ -51,16 +53,16 @@ name="myForm" ng-hide="isValid" novalidate>
 <script>
 var app = angular.module('myApp',['textAngular']);
 app.controller('validateCtrl', function($scope,$http) {
-	$scope.event_parameters=[{"name":"","help_text":"Name of the Event: ","ref":"name","textangular":false},
-							 {"name":"","help_text":"Oneline Name: ","ref":"oneline","textangular":false},
-							 {"name":"","help_text":"Introduction: ","ref":"intro","textangular":false},
-							 {"name":"","help_text":"Genre :","ref":"genre","textangular":false},
-							 {"name":"","help_text":"Genrebaap :","ref":"genrebaap","textangular":false},
-							 {"name":"","help_text":"Rules :","ref":"rules","textangular":true},
-							 {"name":"","help_text":"Event ID: ","ref":"event_id","textangular":false},
-							 {"name":"","help_text":"Prizes :","ref":"prizes","textangular":false},
-							 {"name":"","help_text":"Registration :","ref":"registration","textangular":true},
-							 {"name":"","help_text":"Multicity: ","ref":"multicity","textangular":false}
+	$scope.event_parameters=[{"name":"","help_text":"Name of the Event: ","ref":"name","active":false,"textangular":false},
+							 {"name":"","help_text":"Oneline Name: ","ref":"oneline","active":false,"textangular":false},
+							 {"name":"","help_text":"Introduction: ","ref":"intro","active":false,"textangular":false},
+							 {"name":"","help_text":"Genre :","ref":"genre","active":false,"textangular":false},
+							 {"name":"","help_text":"Genrebaap :","ref":"genrebaap","active":false,"textangular":false},
+							 {"name":"","help_text":"Rules :","ref":"rules","active":false,"textangular":true},
+							 {"name":"","help_text":"Event ID: ","ref":"event_id","active":false,"textangular":false},
+							 {"name":"","help_text":"Prizes :","ref":"prizes","active":false,"textangular":false},
+							 {"name":"","help_text":"Registration :","ref":"registration","active":false,"textangular":true},
+							 {"name":"","help_text":"Multicity: ","ref":"multicity","active":false,"textangular":true}
 							 ];
 	$scope.LOAD_GENRES=1;
 	$scope.GENRE_EVENT_ID=0;
