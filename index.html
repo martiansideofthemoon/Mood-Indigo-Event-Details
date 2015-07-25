@@ -21,7 +21,9 @@
 <input id="password" class="form-control" data-ng-model='user.password' type="password" name='password' placeholder='password' required>
 </p>
 <button class="btn btn-default" ng-click="validate()">Click me!</button>
-<p ng-show="loginError">Invalid Username / Password.</p>
+<div ng-show="loginError" class="alert alert-danger">
+  <strong>Invalid Username / Password</strong>
+</div>
 </div>
 </form>
 
@@ -29,16 +31,34 @@
 <div ng-show="isValid">
 
 <form class="form-inline">
-<select class="form-control" ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loadDetails(LOAD_GENRES)"> 
+<select class="form-control" 
+        ng-model="types" 
+        ng-options="x.id as x.name for x in records" 
+        ng-click="GENRE_EVENT_ID=records[types-1]['next_id'];
+                    genres=undefined; 
+                    events=undefined;
+                    event_selected=null; 
+                    currentgenre='';
+                    clearDetails()" > 
 </select>
 
-<select class="form-control" ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loadDetails(LOAD_EVENTS)">
+<select class="form-control" 
+        ng-model="genres" 
+        ng-options="x.id as x.name for x in records[types-1]['genre']"  
+        ng-click=" events=undefined; 
+                    clearDetails(); 
+                    event_selected=null;
+                    currentgenre=records[types-1]['genre'][genres-1]['intro']" >
 </select>
 
-<select class="form-control" ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loadDetails(LOAD_EVENT_DATA)">
+<select class="form-control" 
+        ng-click="clearDetails(); loadEventData()" 
+        ng-model="events" 
+        ng-options="x.event_id as x.name for x in records[types-1]['genre'][genres-1]['details']" >
 </select>
 </form>
-<p ng-bind-html="currentgenre"></p>
+<br>
+<div class="well">{{currentgenre}}</div>
 <form class="form-inline">
 <button class="btn btn-default" ng-click="addEvent()">Add an Event</button>
  <input class="form-control" type="text" ng-model="add_event_text"> 
@@ -50,15 +70,16 @@
     <input id="p.ref" class="form-control" type="text" ng-hide="p.textangular" ng-model="p.name" value="">
     <button class="btn btn-default" ng-show="p.textangular" ng-click="p.active=!p.active">{{!p.active? "Edit" : "Save"}}</button>
     </form>
+    <br>
     <div ng-show="p.active" style="width:70%; border-style:groove; border-width:5px; border-color:blue" text-angular ng-model="p.name"></div>
 </div>
-<button ng-click="update()">Update</button>
-<p ng-show="fields_not_filled">Fill all fields</p>
-
+<form class="form-inline">
+<button class="btn btn-default" ng-click="update()">Update</button>
+<div ng-show="success" class="alert alert-success">Details successfully updated!</div>
+<div ng-show="fields_not_filled" class="alert alert-error">Fields not filled!</div>
+<form>    
 </div>
-    
 </div>
-
 
 <script>
 var app = angular.module('myApp',['textAngular']);
@@ -74,11 +95,9 @@ app.controller('validateCtrl', function($scope,$http) {
 							 {"name":"","help_text":"Registration :","ref":"registration","active":false,"textangular":true},
 							 {"name":"","help_text":"Multicity: ","ref":"multicity","active":false,"textangular":true}
 							 ];
-	$scope.LOAD_GENRES=1;
-	$scope.GENRE_EVENT_ID=0;
 	$scope.fields_not_filled=false;
-	$scope.LOAD_EVENTS=2;
-	$scope.LOAD_EVENT_DATA=3;
+    $scope.GENRE_EVENT_ID=0;
+    $scope.success=false;
 	$scope.valid_users = [
 	{
 	"username": "kalpesh",
@@ -118,46 +137,31 @@ app.controller('validateCtrl', function($scope,$http) {
     	//REPLACE WITH API CALL
     	
     };
-    $scope.loadDetails = function(id)
+    $scope.loadEventData = function()
     {
-    	$scope.clearDetails(id);
-    	switch (id)
-    	{
-    		case $scope.LOAD_GENRES:
-    			$scope.genre_options=$scope.records[$scope.types-1]['genre'];
-    			$scope.GENRE_EVENT_ID=$scope.records[$scope.types-1]['next_id'];
-    			$scope.event_options=[];
-    			break;
-    		case $scope.LOAD_EVENTS:
-    			$scope.event_options=$scope.genre_options[$scope.genres-1]['details'];
-                $scope.currentgenre=$scope.genre_options[$scope.genres-1]['intro'];
-    			break;
-    		case $scope.LOAD_EVENT_DATA:
-    			for (var i=0;i<$scope.event_options.length;i++)
-    			{
-    				if ($scope.event_options[i]['event_id']==$scope.events)
-    				{
-    					$scope.event_selected=$scope.event_options[i];
-    					break;
-    				}
-    			}
-    			console.log($scope.event_selected);
-    			for (var i=0;i<$scope.event_parameters.length;i++)
-    				$scope.event_parameters[i]['name']=$scope.event_selected[$scope.event_parameters[i]['ref']];
-    			break;
-    	}	
+        
+            var temp = $scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'];
+            for (var i=0;i<temp.length;i++)
+            {
+                if (temp[i]['event_id']==$scope.events)
+                {
+                    $scope.event_selected=temp[i];
+                    break;
+                }
+            }
+            console.log($scope.event_selected);
+            for (var i=0;i<$scope.event_parameters.length;i++)
+            $scope.event_parameters[i]['name']=$scope.event_selected[$scope.event_parameters[i]['ref']];
+        
     };
-    $scope.clearDetails = function(id)
+    $scope.clearDetails = function()
     {
-    	switch(id)
-    	{
-	    	case $scope.LOAD_GENRES:
-	    		$scope.event_options=[];
-			case $scope.LOAD_EVENTS:
-				for (var i=0;i<$scope.event_parameters.length;i++)
-					$scope.event_parameters[i]['name']="";
-				break;
-		}
+        $scope.success=false;
+        console.log("Clearing fields..");
+        console.log($scope.event_parameters);
+        for (var i=0;i<$scope.event_parameters.length;i++)
+            $scope.event_parameters[i]['name']="";
+
     }
     $scope.update = function()
     {
@@ -167,9 +171,10 @@ app.controller('validateCtrl', function($scope,$http) {
     	{
     		$scope.fields_not_filled=false;
     		var event_position=0;
-    		for (var i=0;i<$scope.event_options.length;i++)
+            var temp = $scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'];
+    		for (var i=0;i<temp.length;i++)
     			{
-    				if ($scope.event_options[i]['event_id']==$scope.events)
+    				if (temp[i]['event_id']==$scope.events)
     				{
     					event_position=i;
     					break;
@@ -192,7 +197,7 @@ app.controller('validateCtrl', function($scope,$http) {
 	      }).success(function(data, status, headers, config){
 	       		if(data)
                 {
-                    alert("successfully updated");
+                    $scope.success=true;
                 }
                 else
                 {
@@ -203,7 +208,7 @@ app.controller('validateCtrl', function($scope,$http) {
     }
     $scope.addEvent = function()
     {
-    	console.log($scope.add_event_text);
+        console.log("ID of new event is "+$scope.GENRE_EVENT_ID);
     	if ($scope.add_event_text===undefined || $scope.add_event_text==="")
     		$scope.add_event_text="Empty!!";
     	else if ($scope.types===undefined || $scope.genres===undefined)
@@ -226,14 +231,14 @@ app.controller('validateCtrl', function($scope,$http) {
                         "multicity": ""
                     };
     		$scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'].push(new_event);
-    		console.log($scope.add_event_text);
+            console.log($scope.add_event_text);
     		console.log($scope.GENRE_EVENT_ID);
     		$scope.add_event_text="";
-    		$scope.loadDetails($scope.LOAD_GENRES);
-    		$scope.loadDetails($scope.LOAD_EVENTS);
-    		$scope.events=$scope.GENRE_EVENT_ID;
-    		$scope.loadDetails($scope.LOAD_EVENT_DATA);
-    		$scope.records[$scope.types-1]['next_id']=$scope.GENRE_EVENT_ID+1;
+    		var temp = $scope.records[$scope.types-1]['genre'][$scope.genres-1]['details'];
+            $scope.events=$scope.GENRE_EVENT_ID;
+            $scope.loadEventData();
+            $scope.records[$scope.types-1]['next_id']=$scope.GENRE_EVENT_ID+1;
+            $scope.GENRE_EVENT_ID+=1;
     		//$scope.clearDetails($scope.LOAD_EVENTS);
     	}
     };
