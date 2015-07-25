@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html ng-app="myApp" >
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script> 
 <link rel='stylesheet' href='node_modules/textangular/dist/textAngular.css'>
 <link href="http://designers.hubspot.com/hs-fs/hub/327485/file-2054199286-css/font-awesome.css" rel="stylesheet">
@@ -7,48 +12,53 @@
 <script src='node_modules/textangular/dist/textAngular-sanitize.min.js'></script>
 <script src='node_modules/textangular/dist/textAngular.min.js'></script>
 <body ng-controller="validateCtrl">
-<form  
-name="myForm" ng-hide="isValid" novalidate>
-
-<p>Username:<br>
-<input type="text" name="user" ng-model="user.username" required>
-
+<div class="container">
+<form name="myForm" ng-hide="isValid" novalidate>
+<div class="form-group" style="width:30%;">
+<label for="username">Username</label>
+<input type="text" id="username" class="form-control" name="user" ng-model="user.username" required>
+<label for="password">Password</label>
+<input id="password" class="form-control" data-ng-model='user.password' type="password" name='password' placeholder='password' required>
 </p>
-
-<p>Password:<br>
-<input data-ng-model='user.password' type="password" name='password' placeholder='password' required>
-      <div ng-show="form.password.$error.required">
-        Field required</div>
-</p>
-<button ng-click="validate()">Click me!</button>
+<button class="btn btn-default" ng-click="validate()">Click me!</button>
 <p ng-show="loginError">Invalid Username / Password.</p>
+</div>
 </form>
-<form ng-show="isValid">
-<p>
-<select ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loadDetails(LOAD_GENRES)">	
+
+
+<div ng-show="isValid">
+
+<form class="form-inline">
+<select class="form-control" ng-model="types" ng-options="x.id as x.name for x in records" ng-change="loadDetails(LOAD_GENRES)"> 
 </select>
-</p>
-<p>
-<select ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loadDetails(LOAD_EVENTS)">
+
+<select class="form-control" ng-model="genres" ng-options="x.id as x.name for x in genre_options" ng-change="loadDetails(LOAD_EVENTS)">
 </select>
-</p>
+
+<select class="form-control" ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loadDetails(LOAD_EVENT_DATA)">
+</select>
+</form>
 <p ng-bind-html="currentgenre"></p>
-<p>
-<select ng-model="events" ng-options="x.event_id as x.name for x in event_options" ng-change="loadDetails(LOAD_EVENT_DATA)">
-</select>
-</p>
-<p>
-<button ng-click="addEvent()">Add an Event</button> <input type="text" ng-model="add_event_text"> 
-</p>
+<form class="form-inline">
+<button class="btn btn-default" ng-click="addEvent()">Add an Event</button>
+ <input class="form-control" type="text" ng-model="add_event_text"> 
+</form>
+<br>
 <div ng-repeat="p in event_parameters">
-	{{p.help_text}}<input type="text" ng-hide="p.textangular" ng-model="p.name" value="">
-    <button ng-show="p.textangular" ng-click="p.active=!p.active">{{!p.active? "Edit" : "Save"}}</button>
-    <br><br>
+    <form class="form-inline">
+    <label type="text" for="p.ref">{{p.help_text}}</label>
+    <input id="p.ref" class="form-control" type="text" ng-hide="p.textangular" ng-model="p.name" value="">
+    <button class="btn btn-default" ng-show="p.textangular" ng-click="p.active=!p.active">{{!p.active? "Edit" : "Save"}}</button>
+    </form>
     <div ng-show="p.active" style="width:70%; border-style:groove; border-width:5px; border-color:blue" text-angular ng-model="p.name"></div>
 </div>
 <button ng-click="update()">Update</button>
 <p ng-show="fields_not_filled">Fill all fields</p>
-</form>
+
+</div>
+    
+</div>
+
 
 <script>
 var app = angular.module('myApp',['textAngular']);
